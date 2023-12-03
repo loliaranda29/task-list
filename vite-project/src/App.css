@@ -1,0 +1,37 @@
+.App {
+  margin: 0 auto;
+  padding-left: 600px;
+  padding-right: 800px;
+  padding-bottom: 300px;
+  padding-top: 100px;
+  text-align: left;
+  background: linear-gradient(to bottom, blue, red);
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+.task-container {
+  padding: 5rem;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin-top: -2rem;
+}
+
+.task-add {
+  margin-bottom: 1rem;
+}
+
+.delete-all-button {
+  margin-top: 1rem;
+  color: white;
+  border: none;
+  padding: 0.9rem 0.9rem; 
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem; 
+}
+
+button {
+  font-size: 80px
+  ; 
+}
