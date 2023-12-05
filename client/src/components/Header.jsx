@@ -1,5 +1,9 @@
 const Title = () => {
-    return<h1><center>Task List</center></h1>
-};
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h1>Task List</h1>
+      </div>
+    );
+  };
 
 export default Title

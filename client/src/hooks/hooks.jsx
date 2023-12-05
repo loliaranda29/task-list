@@ -1,41 +1,49 @@
 import { useState, useEffect } from 'react';
-
+import axios from 'axios';
 
 const UseTaskManager = () => {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState({ name: '', completed: false });
+  const [newTask, setNewTask] = useState({ task: '', completed: false });
 
-  useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    if (storedTasks.length > 0) {
-      setTasks(storedTasks);
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/notes`);
+      setTasks(response.data.tasks);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
     }
-  }, []); 
+  };
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    fetchTasks();
+  }, []);
 
-  const addTask = () => {
-    if (newTask.name.trim() !== '') {
-      setTasks([
-        ...tasks,
-        { id: tasks.length + 1, name: newTask.name, completed: false },
-      ]);
+  const editTask = async (taskId, newName, newCompleted) => {
+    try {
+      await axios.put(`http://localhost:3000/notes/${taskId}`, { task: newName, status: newCompleted });
+      fetchTasks();
+    } catch (error) {
+      console.error('Error editing task:', error);
+      console.log('Server response:', error.response); // Agrega esta línea para obtener más detalles
+    }
+  };
+
+  const addTask = async () => {
+    try {
+      await axios.post(`http://localhost:3000/notes`, { task: newTask.name }); // Cambié newTask.name por newTask.task
+      fetchTasks();
       setNewTask({ name: '', completed: false });
+    } catch (error) {
+      console.error('Error adding task:', error);
     }
   };
-
-  const editTask = (taskId, newName, newCompleted) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, name: newName, completed: newCompleted } : task
-    );
-    setTasks(updatedTasks);
-  };
-
-  const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
+  const deleteTask = async (taskId) => {
+    try {
+      await axios.delete(`http://localhost:3000/notes/${taskId}`);
+      fetchTasks();
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   };
 
   return { tasks, newTask, setNewTask, addTask, editTask, deleteTask };

@@ -5,8 +5,8 @@ const noteSchema = new Schema({
     task: String,
 }, 
 {
-    timetamps: false,
-    versionkey: false,
+    timestamps: false,
+    versionKey: false, 
 }
 );
 

@@ -23,12 +23,13 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Center w="1300px"  h='800'>
-        <VStack spacing={6} w="600px">
-          <Text  bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='2xl' fontWeight='bold'>
-          <Title /></Text>
-          <form onSubmit={handleTaskSubmission}>
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <Center w="1300px" h='800'>
+      <VStack spacing={6} w="600px">
+        <Text bgGradient='linear(to-l, #7928CA, #FF0080)' bgClip='text' fontSize='2xl' fontWeight='bold'>
+          <Title />
+        </Text>
+        <form onSubmit={handleTaskSubmission}>
             <VStack spacing={2} w="100%">
               <Input
                 placeholder="New task"
@@ -38,7 +39,7 @@ const App = () => {
               <Button colorScheme='blue' type="submit" leftIcon="Add">
               </Button>
             </VStack>
-          </form>
+            </form>
           <VStack spacing={6} w="600px" mt={8}>
             <TaskList tasks={tasks} editTask={editTask} deleteTask={deleteTask} />
           </VStack>

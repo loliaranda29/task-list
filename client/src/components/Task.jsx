@@ -2,21 +2,25 @@ import React, { useState } from 'react';
 
 function Task({ task, editTask, deleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [newName, setNewName] = useState(task.name);
+  const [newName, setNewName] = useState(task.task);
 
   const handleSave = () => {
-    editTask(task.id, newName, task.completed);
+    editTask(task._id, task.task, task.completed); // Usamos task.task en lugar de newName
     setIsEditing(false);
+  };
+
+  const handleCheckboxChange = () => {
+    editTask(task._id, task.task, !task.completed); // Enviar el nuevo estado de completado
   };
 
   return (
     <div>
-    <input
-  type="checkbox"
-  checked={task.completed}
-  onChange={() => editTask(task.id, newName, !task.completed)}
-/>
-    {isEditing ? (
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={handleCheckboxChange}
+      />
+      {isEditing ? (
         <>
           <input
             type="text"
@@ -28,24 +32,22 @@ function Task({ task, editTask, deleteTask }) {
       ) : (
         <>
           <span style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
-            {task.name}
+            {task.task}
           </span>
         </>
       )}
       <button onClick={() => setIsEditing(!isEditing)}>
-          <span role="img" aria-label="Cancel edit">
-           ✏️
-          </span>
-        </button>
-        
-        <button onClick={() => deleteTask(task.id)}>
-          <span role="img" aria-label="Delete task">
-            🗑️
-          </span>
-        </button>
-      </div>
-    );
-  }
-
+        <span role="img" aria-label="Cancel edit">
+          ✏️
+        </span>
+      </button>
+      <button onClick={() => deleteTask(task._id)}>
+        <span role="img" aria-label="Delete task">
+          🗑️
+        </span>
+      </button>
+    </div>
+  );
+}
 
 export default Task;
